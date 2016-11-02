@@ -1,9 +1,8 @@
 import sys
-import numpy as np
+from get_samples import get_info
 from sklearn import tree
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
 
 
 def getArgs(argv):
@@ -16,28 +15,9 @@ def getArgs(argv):
     return file
 
 
-def readFile(fileName):
-    mat = []
-    classes = []
-    with open(fileName) as fileobject:
-        for line in fileobject:
-            row = line.strip().split(' ')
-            classes.append(int(row.pop()))
-            mat.append(np.array(map(float, row)))
-    row = int(mat.pop(0))
-    cols = classes.pop(0)
-    return mat, classes
-
-
 fileName = getArgs(sys.argv)
 
-
-print 'Reading files...'
-allSamples, allClasses = readFile(fileName)
-print 'Done.'
-
-trSmpl, tsSmpl, trLbls, tsLbls = train_test_split(
-    allSamples, allClasses, test_size=0.40, random_state=42)
+trSmpl, tsSmpl, trLbls, tsLbls = get_info(fileName, 0.40)
 
 clf = tree.DecisionTreeClassifier(max_depth=10)
 print 'Fitting...'
