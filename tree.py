@@ -6,16 +6,17 @@ from sklearn.metrics import accuracy_score
 
 
 def getArgs(argv):
-    msg = 'Usage: python read_file -f <samples_file>'
-    if (len(argv) != 3):
+    msg = 'Usage: python read_file -f <samples_file> -o <output_file>'
+    if (len(argv) != 5):
         print '\n\t', msg, '\n'
         exit()
     file = argv[argv.index('-f') + 1]
+    out = argv[argv.index('-o') + 1]
 
-    return file
+    return file, out
 
 
-fileName = getArgs(sys.argv)
+fileName, out = getArgs(sys.argv)
 
 trSmpl, tsSmpl, trLbls, tsLbls = get_info(fileName, 0.40)
 
@@ -31,7 +32,7 @@ print 'Creating matConfusao.'
 print confusion_matrix(tsLbls, treeResult)
 print accuracy_score(tsLbls, treeResult)
 
-with open("tree_3.dot", 'w') as f:
+with open(out, 'w') as f:
     f = tree.export_graphviz(clf, out_file=f)
 # print "Predicted classes: ", treeResult
 # print "Real classes: ", tsLbls
