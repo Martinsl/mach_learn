@@ -55,6 +55,7 @@ np_hists = np_hists[:, np_hists.sum(axis=0) > 0]
 
 # Normalizando colunas, tomar cuidado com ultima col
 np_hists = normalize(np_hists.astype(np.float64))
+np.random.shuffle(np_hists)
 
 lbpFileName = "gabor_hist" + str(frequency)
 f = file(lbpFileName, "w")
