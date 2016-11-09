@@ -9,7 +9,13 @@ import cv2
 def getHistogram(img_path, img_class):
     image = cv2.imread(img_path)
     grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    lpath = os.getcwd()
+
+    cv2.imwrite(lpath + str(img_class) + "_or.jpg", grayImage)
+
     grayImage = cv2.equalizeHist(grayImage)
+
+    cv2.imwrite(lpath + str(img_class) + "_eq.jpg", grayImage)
 
     lbp = local_binary_pattern(grayImage, n_points, radius, METHOD)
     hist, _ = np.histogram(lbp.ravel(), 256, [0, 256])
@@ -54,6 +60,7 @@ for i in os.listdir(imgs_path):
                 print '\t', j
                 hists.append(getHistogram(join(class_path, j), int(i)))
 
+
 # Removendo todos valores que a soma da coluna eh zero
 np_hists = np.array(hists)
 np_hists = np_hists[:, np_hists.sum(axis=0) > 0]
@@ -62,7 +69,7 @@ np_hists = np_hists[:, np_hists.sum(axis=0) > 0]
 np_hists = normalize(np_hists.astype(np.float64))
 np.random.shuffle(np_hists)
 
-lbpFileName = "eq_lbp_hist" + str(radius)
+lbpFileName = "eq_lbp_hist_" + str(radius)
 f = file(lbpFileName, "w")
 
 f.write("%s %s\n" % (len(np_hists), len(np_hists[0])))

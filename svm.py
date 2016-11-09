@@ -19,7 +19,9 @@ fileName = getArgs(sys.argv)
 
 trSmpl, tsSmpl, trLbls, tsLbls = get_info(fileName, 0.40)
 
-clf = svm.SVC()
+kernels = ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
+
+clf = svm.SVC(kernel='linear')
 print 'Fitting...'
 clf = clf.fit(trSmpl, trLbls)
 

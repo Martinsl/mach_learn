@@ -19,7 +19,7 @@ fileName = getArgs(sys.argv)
 
 trSmpl, tsSmpl, trLbls, tsLbls = get_info(fileName, 0.40)
 
-neigh = KNeighborsClassifier(n_neighbors=3)
+neigh = KNeighborsClassifier(n_neighbors=7, weights='distance')
 
 print 'Fitting...'
 neigh.fit(trSmpl, trLbls)
