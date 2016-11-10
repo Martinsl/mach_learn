@@ -23,3 +23,5 @@ trSmpl, tsSmpl, trLbls, tsLbls = get_info(fileName, 0.40)
 
 bagging = BaggingClassifier(KNeighborsClassifier(),
                             max_samples=0.5, max_features=0.5)
+bagging = BaggingClassifier(KNeighborsClassifier(),
+                            max_samples=0.5, max_features=0.5)
