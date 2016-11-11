@@ -51,10 +51,16 @@ for i in os.listdir(imgs_path):
             if '.DS' not in j and 'out' not in j:
                 print '\t', j
                 hists.append(getHistogram(join(class_path, j), int(i)))
-
+                break
 # Removendo todos valores que a soma da coluna eh zero
 np_hists = np.array(hists)
 np_hists = np_hists[:, np_hists.sum(axis=0) > 0]
+
+np.set_printoptions(threshold='nan')
+x = np_hists.std(1)
+print x
+print len(np_hists)
+print len(x)
 
 # Normalizando colunas, tomar cuidado com ultima col
 np_hists = normalize(np_hists.astype(np.float64))

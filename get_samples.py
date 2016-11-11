@@ -1,4 +1,6 @@
 import numpy as np
+import random
+from datetime import datetime
 from sklearn.model_selection import train_test_split
 
 
@@ -16,7 +18,8 @@ def readFile(fileName):
     return mat, classes
 
 
-def get_info(filePath, trPercent, rndState=42):
+def get_info(filePath, trPercent):
+    rndState = random.seed(datetime.now())
     allSamples, allClasses = readFile(filePath)
 
     return train_test_split(

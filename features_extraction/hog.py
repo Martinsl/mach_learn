@@ -32,8 +32,8 @@ def normalize(arr):
     return arr
 
 
-if len(sys.argv) < 3:
-    print "\n\tusage: load_hists.py <imgs_dir_path>\n"
+if len(sys.argv) != 2:
+    print "\n\tusage: hog.py <imgs_dir_path>\n"
     exit()
 
 imgs_path = sys.argv[1]
@@ -48,13 +48,19 @@ for i in os.listdir(imgs_path):
             if '.DS' not in j and 'out' not in j:
                 print '\t', j
                 hists.append(getHistogram(join(class_path, j), int(i)))
-                exit()
+                break
 
 # Removendo todos valores que a soma da coluna eh zero
 np_hists = np.array(hists)
 np_hists = np_hists[:, np_hists.sum(axis=0) > 0]
 
 # Normalizando colunas, tomar cuidado com ultima col
+np.set_printoptions(threshold='nan')
+x = np_hists.std(1)
+print x
+print len(np_hists)
+print len(x)
+
 np_hists = normalize(np_hists.astype(np.float64))
 np.random.shuffle(np_hists)
 
